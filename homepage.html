@@ -18,46 +18,51 @@
     <![endif]-->
 </head>
 <body>
-    <div class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#responsive-menu">
-                    <span class="sr-only">Адчыніць навігацыю</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse" id="responsive-menu">
-                <ul class="nav nav-pills">
-                    <li role="presentation" class="active"><a href="#">Conversation</a></li>
-                    <li role="presentation"><a href="#">Message history</a></li>
-                    <li><span class="label label-success">Connected</span></li>
-                </ul>
 
-            </div>
-        </div>
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Jan Messenger</a>
     </div>
 
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Conversation <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">History</a></li>
+        
+      </ul>
+      <form class="navbar-form navbar-left" role="input">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">@</span>
+            <input type="text" class="form-control" placeholder="Username..." ariadescribedby="basic-adddon1">
+        </div>
+      </form>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="label label-success">Connected</span></a></li>
+        
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+   
     <div class="container-fluid ">
         <div class="row">
             <div class="col-md-2 col-md-offset-2">
-
-                <div class="info">
-
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">@</span>
-                        <input type="text" class="form-control" placeholder="Username" ariadescribedby="basic-adddon1">
-                    </div>
-                </div>
-                <br>
                 <p><span class="label label-info">Online:</span></p>
-                <ul class="persons styled">
-                    
-                    <li>Person 1</li>
-                    <li>Person 2</li>
-                    <li>Person 3</li>
-                    <li>Person 4</li>
+                <ul class="persons list-group">
+                    <li class="list-group-item">Person 1</li>
+                    <li class="list-group-item">Person 2</li>
+                    <li class="list-group-item">Person 3</li>
+                    <li class="list-group-item">Person 4</li>
                 </ul>
             </div>
 
@@ -89,26 +94,13 @@
                     </tr>
 
                 </table>
-                <div class="input-append">
-                    <input class="span2" id="appendedInputButton" type="text">
-                    <button class="btn" type="button">Go!</button>
+
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Input message...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" type="button">Send</button>
+                    </span>
                 </div>
-                
-                <form>
-                    <div class="input-append">
-                        <input type="text" class="span2 search-query">
-                        <button type="submit" class="btn">Search</button>
-                    </div>
-                </form>
-                
-                <form >
-                    <input type="text" placeholder="Text input">
-                    <p><input type="submit" value="Enter"></p>
-                </form>
-                <form >
-                    <textarea rows="3" cols="80" name="message" placeholder="Enter message..."></textarea>
-                    <p><input type="submit" value="Enter"></p>
-                </form>
             </div>
         </div>
     </div>

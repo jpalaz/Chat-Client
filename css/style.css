@@ -39,3 +39,7 @@
 .col-delete {
     width: 5%;
 }
+
+.connected-label {
+    align-content: center
+}
