@@ -21,7 +21,6 @@
 .table {
     table-layout: fixed;
     width: 100%;
-    white-space: nowrap;
 }
 
 .col-time {
@@ -42,4 +41,10 @@
 
 .connected-label {
     align-content: center
+}
+
+.conversation {
+    //height: ;       
+    overflow-y: auto;
+    
 }
