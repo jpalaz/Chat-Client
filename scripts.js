@@ -1,8 +1,17 @@
 function run() {
 	var button = document.getElementsByClassName('btn-add')[0];
-
 	button.addEventListener('click', onAddButtonClick);
+    var username = document.getElementsByClassName('input-name')[0];
+    
+    username.addEventListener('click', onNameInput);
+    var input = document.getElementsByClassName('messageText')[0];
+
+	input.addEventListener('keydown', onTextInput);
     updateCounter();
+}
+
+function onNameInput() {
+    
 }
 
 function onAddButtonClick() {
@@ -11,6 +20,13 @@ function onAddButtonClick() {
 	addMessage(message.value);
 	message.value = '';
 	updateCounter();
+}
+
+function onTextInput(e) {
+    var key = e.keyCode;
+    if (key === 13) { // 13 is enter
+      onAddButtonClick();
+    }
 }
 
 function addMessage(value) {
@@ -24,13 +40,6 @@ function addMessage(value) {
     
 	updateCounter();
 }
-
-/*<tr class="item">
-<td class="col-time"><time>2015-02-26</time></td>
-<td class="col-message">Person 1: Message 1.</td>
-<td class="col-edit"><a class="btn-default" href="#"><i class="glyphicon glyphicon-edit"></i></a></td>
-<td class="col-delete"><a class=&quot;btn-default&quot; href=&quot;#&quot;><i class=&quot;glyphicon glyphicon-remove&quot;></i></a></td>
-</tr>*/
 
 function createRowValues(row, text){
 	var tdTime = document.createElement('td');

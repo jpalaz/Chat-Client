@@ -35,7 +35,7 @@
       <form class="navbar-form navbar-left" role="input">
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">@</span>
-            <input type="text" class="form-control" placeholder="Username..." ariadescribedby="basic-adddon1">
+            <input type="text" class="form-control input-name" placeholder="Username..." ariadescribedby="basic-adddon1">
         </div>
       </form>
       
@@ -48,9 +48,9 @@
   </div><!-- /.container-fluid -->
 </nav>
    
-    <div class="container-fluid ">
-        <div class="row">
-            <div class="col-md-2 col-md-offset-2">
+    <div class="container-fluid">
+        <div class="row body">
+            <div class="side col-md-2 col-md-offset-2">
                 <p><span class="label label-info">Online:</span></p>
                 <ul class="persons list-group">
                     <li class="list-group-item">Person 1</li>
@@ -60,7 +60,7 @@
                 </ul>
             </div>
 
-            <div class="col-md-6 conversation">
+            <div class="side col-md-6 conversation" >
                 <table class="table items">
                     <tr class="item">
                         <td class="col-time"><time>2015-02-26</time></td>
@@ -88,8 +88,8 @@
                     </tr>
 
                 </table>
-
-                <div class="input-group">
+<!-- -->
+                <div class="input-group message-input bottom" >
                     <input type="text" class="form-control messageText" placeholder="Input message...">
                     <span class="input-group-btn">
                         <button class="btn btn-success btn-add" type="button" id="addButton">Send</button>

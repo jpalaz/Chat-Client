@@ -1,21 +1,7 @@
-.main-flew {
-    position: relative;
-}
-
-.main-flew #input {
-    position: absolute;
-    bottom: 100px;
-}
-
 .conversation { 
-    /*scrolling: touch;*/    
     overflow-x: hidden;
     overflow-y: auto;
     table-layout: fixed;
-}
-
-.content {
-    height: 100%;
 }
 
 .table {
@@ -39,12 +25,38 @@
     width: 5%;
 }
 
-.connected-label {
-    align-content: center
+/*.row {
+    height: 100%;
+    display: table-row;
 }
 
-.conversation {
-    //height: ;       
-    overflow-y: auto;
-    
+.side {
+    float: none;
+    display: table-cell;
+    border: 1px solid;
+}*/
+
+/*html, body {
+    box-sizing:border-box;
+    height: 100%;
+    margin: 0; padding: 0;
+}*/
+
+.body {
+    /*display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;*/
 }
+
+/*.container-fluid {
+    height: 100%;
+    display: table;
+    width: 100%;
+}
+
+.bottom {
+    position: absolute;
+    bottom: 5px;
+    margin-right: 25px;
+}*/
