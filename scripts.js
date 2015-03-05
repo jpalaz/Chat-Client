@@ -26,12 +26,9 @@ function run() {
     var table = document.getElementsByClassName('table')[0];
     table.scrollTop = table.scrollHeight;
     
-    //var htmlTag = document.getElementsByTagName('html')[0];
-    //htmlTag.attachEvent("onresize", onResizePage);
-    
-    document.getElementsByClassName('table')[0].style.height = '500px';
     makeIconsUnvisible();
     updateCounter();
+    onResizeDocument();
 }
 
 function onResizeDocument() {
