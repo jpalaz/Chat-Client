@@ -1,8 +1,10 @@
 var username = "";
 var selectedRow = null;
 var isEditing = false;
+var connected = true;
 
 function run() {
+    
 	var button = document.getElementsByClassName('btn-add')[0];
 	button.addEventListener('click', onAddButtonClick);
     
@@ -18,14 +20,33 @@ function run() {
     var remove = document.getElementsByClassName('icon')[1];
     remove.addEventListener('click', onRemoveClick);
     
+    var conection = document.getElementById('conection-item');
+    conection.addEventListener('click', onConnectionPress);
+    
+    var table = document.getElementsByClassName('table')[0];
+    table.scrollTop = table.scrollHeight;
+    
+    //var htmlTag = document.getElementsByTagName('html')[0];
+    //htmlTag.attachEvent("onresize", onResizePage);
+    
+    document.getElementsByClassName('table')[0].style.height = '500px';
+    makeIconsUnvisible();
     updateCounter();
+}
+
+function onResizeDocument() {
+    var all = document.getElementsByTagName('html')[0].clientHeight;
+    var navbar = document.getElementsByClassName('navbar')[0].clientHeight;
+    var input = document.getElementsByClassName('message-input')[0].clientHeight;
+    var height = all - navbar - input - 50;
+    height = height.toString() + 'px';
+    document.getElementsByClassName('table')[0].style.height = height;
 }
 
 function onAddButtonClick() {
     var message = document.getElementsByClassName('messageText')[0];
     
-    if(isEditing == true)
-    {
+    if(isEditing == true) {
         selectedRow.getElementsByClassName('list-group-item-text')[0].innerHTML = message.value;
         message.value = '';
         
@@ -34,8 +55,7 @@ function onAddButtonClick() {
         return;
     }
     
-    while(username.length === 0)
-    {
+    while(username.length === 0) {
         username = prompt("Enter your username!");
     }
     
@@ -53,10 +73,8 @@ function onNameInput(e) {
 }
 
 function onTextInput(e) {  
-    if(isEditing == true)
-    {
-        if(e.currentTarget.value.length == 0)
-        {
+    if(isEditing == true) {
+        if(e.currentTarget.value.length == 0) {
             isEditing = false;
             selectedRow = null;
         }
@@ -69,13 +87,23 @@ function onTextInput(e) {
 }
 
 function addMessage(value) {
-	if(!value){
+	if(!value) {
 		return;
 	}
     
 	var table = document.getElementsByClassName('table')[0];
+    
+    var bottomScroll = false;
+    var h1 = table.scrollHeight - table.scrollTop;
+    var h2 = table.clientHeight + table.firstElementChild.lastChild.scrollHeight;
+    if(h1 <= h2)
+        bottomScroll = true;
+    
     var row = table.insertRow(-1);
     createRowValues(row, value);
+    
+    if(bottomScroll)
+        table.scrollTop = table.scrollHeight;
     
 	updateCounter();
 }
@@ -114,15 +142,20 @@ function createRowValues(row, text) {
 
 function getCurrentTime() {
     var date = new Date();
-    var time = date.getDate() + '.' + (date.getMonth() + 1);
-    time += "<br>"
-    time += date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+    var time = ('0' + date.getDate()).slice(-2) + '.' + ('0' + (date.getMonth()+1)).slice(-2) + "<br>";
+    time += ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2);
+    time += ':' + ('0' + date.getSeconds()).slice(-2);
     return time;
 }
 
-function generateMessage(text) {
-    var message;
-    return message;
+function makeIconsVisible() {
+    document.getElementsByClassName('icon')[0].style.display = "block";
+    document.getElementsByClassName('icon')[1].style.display = "block";
+}
+
+function makeIconsUnvisible() {
+    document.getElementsByClassName('icon')[0].style.display = "none";
+    document.getElementsByClassName('icon')[1].style.display = "none";
 }
 
 function onMessageClick(e) {
@@ -137,8 +170,7 @@ function onMessageClick(e) {
             message.classList.remove('active');
             selectedRow = null;
             
-            document.getElementsByClassName('icon')[0].style.visibility = "hidden";
-            document.getElementsByClassName('icon')[1].style.visibility = "hidden";
+            makeIconsUnvisible();
         }
         else
         {
@@ -153,8 +185,7 @@ function onMessageClick(e) {
             message.classList.add('active');
             selectedRow = row;
             
-            document.getElementsByClassName('icon')[0].style.visibility = "visible";
-            document.getElementsByClassName('icon')[1].style.visibility = "visible";
+            makeIconsVisible();
         }
     }
 }
@@ -167,13 +198,15 @@ function updateCounter() {
 }
 
 function onEditClick() {
+    if(selectedRow == null)
+        return;
+    
     var text = selectedRow.getElementsByClassName('list-group-item-text')[0];
     var input = document.getElementsByClassName('messageText')[0];
 	input.value = text.innerText;
     
     isEditing = true;
-    document.getElementsByClassName('icon')[0].style.visibility = "hidden";
-    document.getElementsByClassName('icon')[1].style.visibility = "hidden";
+    makeIconsUnvisible();
     
     selectedRow.classList.remove('info');
     var selectedMessage = selectedRow.getElementsByClassName('list-group-item')[0];
@@ -181,9 +214,45 @@ function onEditClick() {
 }
 
 function onRemoveClick() {
+    if(selectedRow == null)
+        return;
+    
     selectedRow.parentNode.removeChild(selectedRow);
     selectedRow = null;
-    document.getElementsByClassName('icon')[0].style.visibility = "hidden";
-    document.getElementsByClassName('icon')[1].style.visibility = "hidden";
+    makeIconsUnvisible();
     updateCounter();
 }
+
+// !!! TEMPORARY METHOD WHILE SERVER IS UNAVAILABLE !!!
+function onConnectionPress() { 
+    if(connected) {
+        onConnectionLost();
+    }
+    else {
+        onConnectionSeted();
+    }
+    connected = !connected;
+}
+
+function onConnectionLost() {
+    var conection = document.getElementById('conection');
+    conection.classList.remove('label-success');
+    conection.classList.add('label-danger');
+    conection.textContent = "Disconnected";
+}
+
+function onConnectionSeted() {
+    var conection = document.getElementById('conection');
+    conection.classList.remove('label-danger');
+    conection.classList.add('label-success');
+    conection.textContent = "Connected";
+}
+
+//window.onresize = function(event) {
+//    var all = document.getElementsByTagName('html').height;
+//    var navbar = document.getElementsByClassName('navbar')[0].height;
+//    var input = document.getElementsByClassName('message-input')[0].height;
+//    var height = all - navbar - input;
+//    height = height.toString() + 'px';
+//    document.getElementsByClassName('table')[0].style.height = height;
+//}

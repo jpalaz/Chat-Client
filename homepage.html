@@ -7,10 +7,10 @@
     <title>Jan Messenger</title>
 
     <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
     <script src="scripts.js"></script>
 </head>
-<body onload="run();">
+<body onload="run();" onresize="onResizeDocument();">
 
   <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -39,14 +39,14 @@
       </form>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
+        <li class="icon-cell">
             <a class="icon" href="#"><i class="glyphicon glyphicon-edit"></i></a>
         </li>
-        <li>
+        <li class="icon-cell">
             <a class="icon" href="#"><i class="glyphicon glyphicon-remove"></i></a>
         </li>
-       <li><a href="#"><span class="counter-holder">0</span></a></li>
-        <li><a href="#"><span class="label label-success">Connected</span></a></li>
+        <li><a href="#"><span class="counter-holder badge">0</span></a></li>
+        <li id="conection-item"><a href="#"><span class="label label-success" id="conection">Connected</span></a></li>
         
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -68,7 +68,7 @@
             <div class="side col-md-6 conversation" >
                 <table class="table items">
                     <tr class="item" id="message1">
-                        <td class="col-time"><time>26.2<br>13:01:52</time></td>
+                        <td class="col-time"><time>26.02<br>13:01:52</time></td>
                         <td class="col-message list-group">
                             <div class="list-group-item">
                                 <h4 class="list-group-item-heading">Person 1</h4>
@@ -78,7 +78,7 @@
                        
                     </tr>
                     <tr class="item" id="message2">
-                        <td class="col-time"><time>26.2<br>13:02:33</time></td>
+                        <td class="col-time"><time>26.02<br>13:02:33</time></td>
                         <td class="col-message list-group">
                             <div class="list-group-item">
                                 <h4 class="list-group-item-heading">Person 3</h4>
@@ -88,7 +88,7 @@
                         
                     </tr>
                     <tr class="item" id="message3">
-                        <td class="col-time"><time>27.2<br>18:23:45</time></td>
+                        <td class="col-time"><time>27.02<br>18:23:45</time></td>
                         <td class="col-message list-group">
                            <div class="list-group-item">
                                 <h4 class="list-group-item-heading">Person 4</h4>
@@ -98,7 +98,7 @@
                         
                     </tr>
                     <tr class="item" id="message4">
-                        <td class="col-time"><time>27.2<br>20:7:5</time></td>
+                        <td class="col-time"><time>27.02<br>20:07:05</time></td>
                         <td class="col-message list-group">
                             <div class="list-group-item">
                                 <h4 class="list-group-item-heading">Person 2</h4>
