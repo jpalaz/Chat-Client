@@ -1,17 +1,9 @@
-.conversation { 
-/*
-    overflow-x: hidden;
-    overflow-y: auto;
-    table-layout: fixed;
-*/
-}
-
 .items {
     table-layout: fixed;
     display: block;
     overflow-y: auto;
+    overflow-x: hidden;
     width: 100%;
-    //height: 500px;
 }
 
 .col-time {
@@ -40,4 +32,29 @@
 
 html, body {
     height: 100%;
+}
+
+.wrap {
+    display: table;
+    padding:10px;
+}
+
+.wrap p {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+textarea {
+    resize: none;
+    height: 200px;
+    overflow: auto;
+}
+
+#addButton {
+    margin-left: 5px;
+    border-radius: 6px;
+}
+
+.input-group-btn {
+    vertical-align: bottom;
 }

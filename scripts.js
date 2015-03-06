@@ -4,12 +4,11 @@ var isEditing = false;
 var connected = true;
 
 function run() {
-    
-	var button = document.getElementsByClassName('btn-add')[0];
+    var button = document.getElementsByClassName('btn-add')[0];
 	button.addEventListener('click', onAddButtonClick);
     
-    var username = document.getElementsByClassName('input-name')[0];
-    username.addEventListener('focusout', onNameInput);
+    var nameInput = document.getElementsByClassName('input-name')[0];
+    nameInput.addEventListener('focusout', onNameInput);
     
     var input = document.getElementsByClassName('messageText')[0];
 	input.addEventListener('keydown', onTextInput);
@@ -43,8 +42,8 @@ function onResizeDocument() {
 function onAddButtonClick() {
     var message = document.getElementsByClassName('messageText')[0];
     
-    if(isEditing == true) {
-        selectedRow.getElementsByClassName('list-group-item-text')[0].innerHTML = message.value;
+    if (isEditing == true) {        
+        selectedRow.getElementsByClassName('list-group-item-text')[0].innerText = message.value;
         message.value = '';
         
         isEditing = false;
@@ -52,15 +51,20 @@ function onAddButtonClick() {
         return;
     }
     
-    while(username.length === 0) {
-        username = prompt("Enter your username!");
+    if (username.length === 0) {
+        //username = prompt("Input your username!");
+        nameInput = document.getElementsByClassName('input-name')[0].focus();
+        return;
+    }
+
+    
+    if(!/\S/.test(message.value)) {
+        message.value = '';
+        return;
     }
     
-    var userInput = document.getElementsByClassName('input-name')[0];
-    userInput.value = username;
-
 	addMessage(message.value);
-	message.value = '';
+    message.value = '';
 	updateCounter();
 }
 
@@ -78,16 +82,57 @@ function onTextInput(e) {
     }
     
     var key = e.keyCode;
-    if (key === 13) { // 13 is enter
-      onAddButtonClick();
+    if (key == 13) { // 13 is enter        
+        e.preventDefault();
+        if(e.shiftKey)
+        {
+            var message = document.getElementsByClassName('messageText')[0];
+            var caretPos = getCaretPosition(message);
+            var text = message.value;
+            var br = '\n';
+            message.value = text.slice(0, caretPos) + br + text.slice(caretPos);
+            setCaretPosition(message, caretPos + 1);
+        }
+        else {
+            onAddButtonClick();
+        }
+        
+        return false;
     }    
+}
+
+function getCaretPosition (textarea) {
+	var caretPos = 0;
+	if (document.selection) {
+	   textarea.focus ();
+		var select = document.selection.createRange ();
+		select.moveStart ('character', -textarea.value.length);
+		caretPos = select.text.length;
+	}
+	else if (textarea.selectionStart || textarea.selectionStart == '0')
+		caretPos = textarea.selectionStart;
+	return caretPos;
+}
+
+function setCaretPosition(textarea, pos) {
+	if (textarea.setSelectionRange)	{
+		textarea.focus();
+		textarea.setSelectionRange(pos, pos);
+	}
+	else if (textarea.createTextRange) {
+		var range = textarea.createTextRange();
+        range.collapse(true);
+		range.moveEnd('character', pos);
+		range.moveStart('character', pos);
+		range.select();
+	}
 }
 
 function addMessage(value) {
 	if(!value) {
 		return;
 	}
-    
+          
 	var table = document.getElementsByClassName('table')[0];
     
     var bottomScroll = false;
@@ -118,7 +163,6 @@ function createRowValues(row, text) {
     
     var tdMessage = document.createElement('td');
     tdMessage.classList.add('col-message');
-    tdMessage.classList.add('list-group');
     
     var divMessage = document.createElement('div');
     divMessage.classList.add('list-group-item');
@@ -128,10 +172,14 @@ function createRowValues(row, text) {
     user.innerHTML = username;
     divMessage.appendChild(user);
     
+    var wrap = document.createElement('div');
+    wrap.classList.add('wrap');
+    
     var message = document.createElement('p');
     message.classList.add('list-group-item-text');
-    message.innerHTML = text;
-    divMessage.appendChild(message);
+    message.innerText = text;
+    wrap.appendChild(message);
+    divMessage.appendChild(wrap);
     
     tdMessage.appendChild(divMessage);
 	row.appendChild(tdMessage);
@@ -199,7 +247,7 @@ function onEditClick() {
         return;
     
     var text = selectedRow.getElementsByClassName('list-group-item-text')[0];
-    var input = document.getElementsByClassName('messageText')[0];
+    var input = document.getElementsByClassName('messageText')[0];    
 	input.value = text.innerText;
     
     isEditing = true;
@@ -244,12 +292,3 @@ function onConnectionSeted() {
     conection.classList.add('label-success');
     conection.textContent = "Connected";
 }
-
-//window.onresize = function(event) {
-//    var all = document.getElementsByTagName('html').height;
-//    var navbar = document.getElementsByClassName('navbar')[0].height;
-//    var input = document.getElementsByClassName('message-input')[0].height;
-//    var height = all - navbar - input;
-//    height = height.toString() + 'px';
-//    document.getElementsByClassName('table')[0].style.height = height;
-//}

@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--    //<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
     <title>Jan Messenger</title>
 
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/hint.css">
     <script src="scripts.js"></script>
 </head>
 <body onload="run();" onresize="onResizeDocument();">
@@ -32,20 +33,22 @@
         <li><a href="#">History</a></li>          
       </ul>
       <form class="navbar-form navbar-left" role="input">
-        <div class="input-group">
+        <div class="input-group hint--bottom" data-hint="Your nickname">
             <span class="input-group-addon" id="basic-addon1">@</span>
-            <input type="text" class="form-control input-name" placeholder="Username..." ariadescribedby="basic-adddon1">
+            <input type="text" class="form-control input-name" placeholder="Input nickname..." ariadescribedby="basic-adddon1" maxlength="20">
         </div>
       </form>
       
       <ul class="nav navbar-nav navbar-right">
-        <li class="icon-cell">
+        <li class="icon-cell hint--bottom" data-hint="Edit selected message">
             <a class="icon" href="#"><i class="glyphicon glyphicon-edit"></i></a>
         </li>
-        <li class="icon-cell">
+        <li class="icon-cell hint--bottom" data-hint="Delete selected message">
             <a class="icon" href="#"><i class="glyphicon glyphicon-remove"></i></a>
         </li>
-        <li><a href="#"><span class="counter-holder badge">0</span></a></li>
+        <li>
+           <a href="#"><span class="counter-holder badge hint--bottom" data-hint="Messages' number">0</span></a>
+        </li>
         <li id="conection-item"><a href="#"><span class="label label-success" id="conection">Connected</span></a></li>
         
       </ul>
@@ -55,7 +58,7 @@
    
     <div class="container-fluid">
         <div class="row body">
-            <div class="side col-md-2 col-md-offset-2">
+            <div class="side col-md-2 col-md-offset-2 col-lg-2 col-lg-offset-2 col-sm-3 col-sm-offset-1 col-xs-4">
                 <p><span class="label label-info">Online:</span></p>
                 <ul class="persons list-group">
                     <li class="list-group-item">Person 1</li>
@@ -65,11 +68,11 @@
                 </ul>
             </div>
 
-            <div class="side col-md-6 conversation" >
-                <table class="table items">
+            <div class="side col-md-6 col-lg-6 col-sm-7 col-xs-8 conversation" >
+                <table class="table items table-hover">
                     <tr class="item" id="message1">
                         <td class="col-time"><time>26.02<br>13:01:52</time></td>
-                        <td class="col-message list-group">
+                        <td class="col-message">
                             <div class="list-group-item">
                                 <h4 class="list-group-item-heading">Person 1</h4>
                                 <p class="list-group-item-text">Message 1.</p>
@@ -79,7 +82,7 @@
                     </tr>
                     <tr class="item" id="message2">
                         <td class="col-time"><time>26.02<br>13:02:33</time></td>
-                        <td class="col-message list-group">
+                        <td class="col-message">
                             <div class="list-group-item">
                                 <h4 class="list-group-item-heading">Person 3</h4>
                                 <p class="list-group-item-text">Message 2.</p>
@@ -89,39 +92,35 @@
                     </tr>
                     <tr class="item" id="message3">
                         <td class="col-time"><time>27.02<br>18:23:45</time></td>
-                        <td class="col-message list-group">
+                        <td class="col-message">
                            <div class="list-group-item">
                                 <h4 class="list-group-item-heading">Person 4</h4>
-                                <p class="list-group-item-text">Message 3.</p>
+                                <div class="wrap">
+                                    <p class="list-group-item-text">Message 3.kfvnjejr nvejrknve<br>jkrnvejknvejk rnvjkrenvjknervkjnerjvnerkjvnrejnvjkrenvkjne rkjvnkejnvkjernvkjernvjkn</p>
+                               </div>
                             </div>
                         </td>
-                        
                     </tr>
                     <tr class="item" id="message4">
                         <td class="col-time"><time>27.02<br>20:07:05</time></td>
-                        <td class="col-message list-group">
+                        <td class="col-message">
                             <div class="list-group-item">
                                 <h4 class="list-group-item-heading">Person 2</h4>
                                 <p class="list-group-item-text">Message 4.</p>
                             </div>
                         </td>
-<!--
-                        <td class="col-edit"><a class="btn-default" href="#"><i class="glyphicon glyphicon-edit"></i></a></td>
-                        <td class="col-delete"><a class="btn-default" href="#"><i class="glyphicon glyphicon-remove"></i></a></td>
--->
                     </tr>
-
                 </table>
-<!-- -->
                 <div class="input-group message-input bottom" >
-                    <input type="text" class="form-control messageText" placeholder="Input message...">
+                    <textarea type="text" class="form-control messageText" placeholder="Input message..." rows="4"></textarea>
                     <span class="input-group-btn">
-                        <button class="btn btn-success btn-add" type="button" id="addButton">Send</button>
+                        <button class="btn btn-success btn-add hint--success hint--left" data-hint="SHIFT+ENTER - to add new line; ENTER - to send message" type="button" id="addButton">Send</button>
                     </span>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+    
+<!--    <div class="alert alert-danger" role="alert">You must input your nickname!</div>-->
 </body>
 </html>
