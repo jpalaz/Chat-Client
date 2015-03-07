@@ -4,10 +4,10 @@ var isEditing = false;
 var connected = true;
 
 function run() {
-    var button = document.getElementsByClassName('btn-add')[0];
+    var button = document.getElementById('add-button');
 	button.addEventListener('click', onAddButtonClick);
     
-    var nameInput = document.getElementsByClassName('input-name')[0];
+    var nameInput = document.getElementById('input-name');
     nameInput.addEventListener('focusout', onNameInput);
     
     var input = document.getElementsByClassName('messageText')[0];
@@ -28,12 +28,21 @@ function run() {
     makeIconsUnvisible();
     updateCounter();
     onResizeDocument();
+    
+    $('#name').tooltip();
+    $('#icon-edit').tooltip();
+    $('#icon-remove').tooltip();
+    $('#messages-number').tooltip();
+    $('#message-input').popover({
+        delay: { "show": 500, "hide": 100 }
+    });
+    $('#input-name').popover();
 }
 
 function onResizeDocument() {
     var all = document.getElementsByTagName('html')[0].clientHeight;
     var navbar = document.getElementsByClassName('navbar')[0].clientHeight;
-    var input = document.getElementsByClassName('message-input')[0].clientHeight;
+    var input = document.getElementById('message-input').clientHeight;
     var height = all - navbar - input - 50;
     height = height.toString() + 'px';
     document.getElementsByClassName('table')[0].style.height = height;
@@ -42,9 +51,15 @@ function onResizeDocument() {
 function onAddButtonClick() {
     var message = document.getElementsByClassName('messageText')[0];
     
-    if (isEditing == true) {        
+    if (isEditing == true) {  
+        var table = document.getElementsByClassName('table')[0];
+        var bottomScroll = isScrollBottom(table);
+        
         selectedRow.getElementsByClassName('list-group-item-text')[0].innerText = message.value;
         message.value = '';
+        
+        if(bottomScroll)
+            table.scrollTop = table.scrollHeight;
         
         isEditing = false;
         selectedRow = null;
@@ -52,8 +67,8 @@ function onAddButtonClick() {
     }
     
     if (username.length === 0) {
-        //username = prompt("Input your username!");
-        nameInput = document.getElementsByClassName('input-name')[0].focus();
+        $('#input-name').popover('show');
+        nameInput = document.getElementById('input-name').focus();
         return;
     }
 
@@ -69,8 +84,9 @@ function onAddButtonClick() {
 }
 
 function onNameInput(e) {
-    var name = document.getElementsByClassName('input-name')[0];
+    var name = document.getElementById('input-name');
     username = name.value;
+    $('#input-name').popover('hide');
 }
 
 function onTextInput(e) {  
@@ -134,12 +150,7 @@ function addMessage(value) {
 	}
           
 	var table = document.getElementsByClassName('table')[0];
-    
-    var bottomScroll = false;
-    var h1 = table.scrollHeight - table.scrollTop;
-    var h2 = table.clientHeight + table.firstElementChild.lastChild.scrollHeight;
-    if(h1 <= h2)
-        bottomScroll = true;
+    var bottomScroll = isScrollBottom(table);
     
     var row = table.insertRow(-1);
     createRowValues(row, value);
@@ -148,6 +159,20 @@ function addMessage(value) {
         table.scrollTop = table.scrollHeight;
     
 	updateCounter();
+}
+
+function isScrollBottom(table) {    
+    var bottomScroll = false;
+    var h1 = table.scrollHeight - table.scrollTop;
+    
+    var h2 = table.clientHeight;
+    if(table.firstElementChild.lastChild.scrollHeight != undefined)
+        h2 += table.firstElementChild.lastChild.scrollHeight;
+    
+    if(h1 <= h2)
+        bottomScroll = true;
+    
+    return bottomScroll;
 }
 
 function createRowValues(row, text) {
@@ -292,3 +317,4 @@ function onConnectionSeted() {
     conection.classList.add('label-success');
     conection.textContent = "Connected";
 }
+

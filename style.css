@@ -14,20 +14,8 @@
     width: 90%;
 }
 
-.icon-cell {
-    background-color: #d9edf7;
-}
-
-.icon-cell:hover, .icon-cell:focus {
-    background-color: #AED3E5;
-}
-
 .glyphicon {
     font-size: 16px;
-}
-.message-input {
-    //position: fixed;
-    //width: inherit;
 }
 
 html, body {
@@ -50,11 +38,16 @@ textarea {
     overflow: auto;
 }
 
-#addButton {
-    margin-left: 5px;
-    border-radius: 6px;
-}
-
 .input-group-btn {
     vertical-align: bottom;
 }
+
+/*
+.popover-username {
+    background: #ffff99;
+    color: red;
+    font-weight: bold;
+}
+
+
+*/
