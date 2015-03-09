@@ -85,6 +85,14 @@ function onAddButtonClick() {
 
 function onNameInput(e) {
     var name = document.getElementById('input-name');
+    
+    if(!/\S/.test(name.value)) {
+        name.value = '';
+        username = '';
+        $('#input-name').popover('show');
+        return;
+    }
+    
     username = name.value;
     $('#input-name').popover('hide');
 }
