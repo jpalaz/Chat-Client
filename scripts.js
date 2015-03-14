@@ -1,45 +1,60 @@
-var username = "";
-var selectedRow = null;
-var isEditing = false;
-var connected = true;
-
-function run() {
-    var button = document.getElementById('add-button');
-	button.addEventListener('click', onAddButtonClick);
+(
+function() {
+    var username;
+    var selectedRow = null;
+    var isEditing = false;
+    var connected = true;
     
+    window.addEventListener('DOMContentLoaded', run);
+    window.addEventListener('resize', onResizeDocument);
+
+    var uniqueId = function() {
+        var date = Date.now();
+        var random = Math.random() * Math.random();
+    
+	   return Math.floor(date * random).toString();
+    };
+
+var message = function(name, input, fromMe, changed, removed) {
+	return {
+        nickname: name,
+        text: input,
+        myMessage: !!fromMe,
+		edited: !!changed,
+		deleted: !!removed,
+		id: uniqueId()
+	};
+};
+
+var messageList = [];
+    
+function run(e) {
+        
+    document.getElementById('add-button').addEventListener('click', onAddButtonClick);
+    
+    username = restoreUsername() || "";
     var nameInput = document.getElementById('input-name');
     nameInput.addEventListener('focusout', onNameInput);
+    nameInput.value = username;
     
-    var input = document.getElementsByClassName('messageText')[0];
-	input.addEventListener('keydown', onTextInput);
-    
-    var edit = document.getElementsByClassName('icon')[0];
-    edit.addEventListener('click', onEditClick);
-    
-    var remove = document.getElementsByClassName('icon')[1];
-    remove.addEventListener('click', onRemoveClick);
-    
-    var conection = document.getElementById('conection-item');
-    conection.addEventListener('click', onConnectionPress);
+    document.getElementsByClassName('messageText')[0].addEventListener('keydown', onTextInput);
+    document.getElementById('conection-item').addEventListener('click', onConnectionPress);
     
     var table = document.getElementsByClassName('table')[0];
     table.scrollTop = table.scrollHeight;
     
-    makeIconsUnvisible();
     updateCounter();
     onResizeDocument();
     
     $('#name').tooltip();
-    $('#icon-edit').tooltip();
-    $('#icon-remove').tooltip();
     $('#messages-number').tooltip();
     $('#message-input').popover({
-        delay: { "show": 500, "hide": 100 }
+        delay: { "show": 2000 }
     });
     $('#input-name').popover();
 }
 
-function onResizeDocument() {
+function onResizeDocument(e) {
     var all = document.getElementsByTagName('html')[0].clientHeight;
     var navbar = document.getElementsByClassName('navbar')[0].clientHeight;
     var input = document.getElementById('message-input').clientHeight;
@@ -48,7 +63,7 @@ function onResizeDocument() {
     document.getElementsByClassName('table')[0].style.height = height;
 }
 
-function onAddButtonClick() {
+function onAddButtonClick(e) {
     var message = document.getElementsByClassName('messageText')[0];
     
     if (isEditing == true) {  
@@ -89,11 +104,13 @@ function onNameInput(e) {
     if(!/\S/.test(name.value)) {
         name.value = '';
         username = '';
+        storeUsername();
         $('#input-name').popover('show');
         return;
     }
     
     username = name.value;
+    storeUsername();
     $('#input-name').popover('hide');
 }
 
@@ -182,7 +199,8 @@ function isScrollBottom(table) {
     
     return bottomScroll;
 }
-
+// <span class="icon" id="icon-edit" data-toggle="tooltip" data-placement="bottom" title="Edit message"><i class="glyphicon glyphicon-edit"></i></span>
+// <span class="icon" id="icon-remove" data-toggle="tooltip" data-placement="bottom" title="Delete message"><i class="glyphicon glyphicon-remove"></i></span>
 function createRowValues(row, text) {
 	row.classList.add('item');
     row.classList.add('my-message');
@@ -202,8 +220,15 @@ function createRowValues(row, text) {
     
     var user = document.createElement('h4');
     user.classList.add('list-group-item-heading');
-    user.innerHTML = username;
+       
+//    var editIcon = '<span class=icon id=icon-edit data-toggle=tooltip data-placement=bottom title=Edit&#32;message><i class=glyphicon&#32;glyphicon-edit></i></span>';
+    user.innerText = username; //+ editIcon;
     divMessage.appendChild(user);
+    //document.getElementsByClassName('icon')[0].addEventListener('click', onEditClick);
+    //$('#icon-edit').tooltip();
+    
+    //document.getElementsByClassName('icon')[1].addEventListener('click', onRemoveClick);
+    //$('#icon-remove').tooltip();
     
     var wrap = document.createElement('div');
     wrap.classList.add('wrap');
@@ -282,6 +307,7 @@ function onEditClick() {
     var text = selectedRow.getElementsByClassName('list-group-item-text')[0];
     var input = document.getElementsByClassName('messageText')[0];    
 	input.value = text.innerText;
+    input.focus();
     
     isEditing = true;
     makeIconsUnvisible();
@@ -325,4 +351,24 @@ function onConnectionSeted() {
     conection.classList.add('label-success');
     conection.textContent = "Connected";
 }
-
+    
+    function storeUsername() {
+        if(typeof(Storage) == "undefined") {
+            alert('localStorage is not accessible');
+            return;
+	   }
+        
+        localStorage.setItem("Username", JSON.stringify(username));
+        //localStorage.setItem("Chat messageList", JSON.stringify(listToSave);
+    }
+    
+    function restoreUsername() {
+        if(typeof(Storage) == "undefined") {
+            alert('localStorage is not accessible');
+            return;
+        }
+        
+        var name = localStorage.getItem("Username");
+        return name && JSON.parse(name);
+    }
+}())

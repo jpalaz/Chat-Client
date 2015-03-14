@@ -9,7 +9,7 @@
     <link href="css/bootstrap.min1.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">    
 </head>
-<body onload="run();" onresize="onResizeDocument();">
+<body>
 
   <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -38,12 +38,6 @@
       </div>
       
       <ul class="nav navbar-nav navbar-right">
-        <li id="icon-edit" data-toggle="tooltip" data-placement="bottom" title="Edit message">
-            <a class="icon" href="#"><i class="glyphicon glyphicon-edit"></i></a>
-        </li>
-        <li id="icon-remove" data-toggle="tooltip" data-placement="bottom" title="Delete message">
-            <a class="icon" href="#"><i class="glyphicon glyphicon-remove"></i></a>
-        </li>
         <li>
            <a href="#"><span class="counter-holder badge" id="messages-number" data-toggle="tooltip" data-placement="bottom" title="Messages' number">0</span></a>
         </li>
@@ -112,7 +106,7 @@
                 <div class="input-group" id="message-input" data-placement="left" data-trigger="hover" data-toggle="popover" title="Press:" data-content="'SHIFT+ENTER' to add new line; 'ENTER' to send message.">
                     <textarea type="text" class="form-control messageText" placeholder="Input message..." rows="4"></textarea>
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" id="add-button">Send</button>
+                        <button class="btn btn-primary" type="button" id="add-button">Send</button>
                     </span>
                 </div>
             </div>
